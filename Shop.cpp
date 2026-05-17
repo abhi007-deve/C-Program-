@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <string>   // ✅ IMPORTANT FIX
+
+using namespace std;
+
+class Product {
+public:
+    int id;
+    string name;
+    float price;
+
+    void display() {
+        cout << id << ". " << name << " - Rs " << price << endl;
+    }
+};
+
+int main() {
+    vector<Product> products;
+
+    products.push_back({1, "Mobile Phone", 15000});
+    products.push_back({2, "Laptop", 55000});
+    products.push_back({3, "Headphones", 2000});
+    products.push_back({4, "Smart Watch", 3000});
+    products.push_back({5, "Keyboard", 1200});
+
+    vector<Product> cart;
+    int choice;
+
+    cout << "===== MINI FLIPKART STORE =====" << endl;
+
+    while (true) {
+        cout << "\nAvailable Products:\n";
+        for (auto &p : products) {
+            p.display();
+        }
+
+        cout << "\nEnter product ID to add to cart (0 to checkout): ";
+        cin >> choice;
+
+        if (choice == 0) break;
+
+        bool found = false;
+
+        for (auto &p : products) {
+            if (p.id == choice) {
+                cart.push_back(p);
+                cout << p.name << " added to cart!\n";
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Invalid product ID!\n";
+        }
+    }
+
+    cout << "\n===== YOUR CART =====\n";
+    float total = 0;
+
+    for (auto &c : cart) {
+        cout << c.name << " - Rs " << c.price << endl;
+        total += c.price;
+    }
+
+    cout << "----------------------\n";
+    cout << "Total Bill: Rs " << total << endl;
+    cout << "Thanks for shopping!\n";
+
+    return 0;
+}
